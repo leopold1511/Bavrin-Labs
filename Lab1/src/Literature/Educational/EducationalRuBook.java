@@ -3,7 +3,7 @@ package Literature.Educational;
 import Literature.RuBook;
 
 public class EducationalRuBook extends RuBook {
-    private String discipline;
+    private final String discipline;
 
     public EducationalRuBook(String type, int edition, String discipline) {
         super(type, edition);

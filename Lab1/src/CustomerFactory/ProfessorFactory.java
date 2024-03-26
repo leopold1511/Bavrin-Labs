@@ -20,15 +20,11 @@ public class ProfessorFactory implements CustomerFactory {
             if (checkSurname(surname)) surname = surname + "а";
             patronymics = nameForPatronymics[3];
         } else patronymics = nameForPatronymics[2];
-        Professor customer = new Professor(name[0], patronymics, surname);
-        return customer;
+        return new Professor(name[0], patronymics, surname);
     }
 
     private boolean checkSurname(String surname) {
-        if (surname.substring(surname.length() - 1).equals("о") ||
-                surname.substring(surname.length() - 1).equals("ь"))
-            return false;
-        return true;
+        return !surname.endsWith("о") && !surname.endsWith("ь");
     }
 }
 

@@ -13,7 +13,6 @@ public class StudentFactory implements CustomerFactory {
         String[] name = listOfNames.get(r.nextInt(listOfNames.size() - 1));
         String surname = listOfSurnames.get(r.nextInt(listOfSurnames.size() - 1))[0];
         if (Objects.equals(name[1], "F")) surname = surname + "а";
-        Student customer = new Student(name[0], surname);
-        return customer;
+        return new Student(name[0], surname);
     }
 }

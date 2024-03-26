@@ -4,7 +4,6 @@ import Literature.Book;
 import Literature.Fiction.FictionEngBook;
 import Literature.Fiction.FictionRuBook;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
