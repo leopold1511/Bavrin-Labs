@@ -1,5 +1,5 @@
 package Literature;
 
-interface Book {
+public interface Book {
     String getString();
 }
