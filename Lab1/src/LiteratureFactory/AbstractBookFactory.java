@@ -5,7 +5,7 @@ import Literature.Book;
 import java.util.List;
 
 interface AbstractBookFactory {
-    Book createRuBook(List<String[]> list1);
+    Book createRuBook();
 
-    Book createEngBook(List<String[]> list2);
+    Book createEngBook();
 }

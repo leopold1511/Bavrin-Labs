@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyCsvReader {
-    public static List readCsv(String file) {
+    public static List<String[]> readCsv(String file) {
         String line;
         List<String[]> result = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
