@@ -54,13 +54,20 @@ public class Generator {
             int numberOfBooks = r.nextInt(3, 11);
             customerInfos[i] = new CustomerInfo("", new String[numberOfBooks]);
             customerInfos[i].customer = customers.get(i).getString();
+            List<Integer> forCheckingRepeats = new ArrayList<>();
             for (int j = 0; j < numberOfBooks; j++) {
                 int size = books.size();
-                int item = new Random().nextInt(size);
+                int item;
+                do {
+                    item = new Random().nextInt(size);
+                } while (forCheckingRepeats.contains(item));
+                forCheckingRepeats.add(item);
                 int k = 0;
                 for (Book obj : books) {
-                    if (k == item)
+                    if (k == item) {
                         customerInfos[i].books[j] = obj.getString();
+                        break;
+                    }
                     k++;
                 }
 
