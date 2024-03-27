@@ -32,7 +32,7 @@ public class GUI extends JFrame {
         add(new JScrollPane(tree));
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setTitle("JTree Example");
+        this.setTitle("Library");
         this.setSize(200, 200);
         this.setVisible(true);
     }
