@@ -16,7 +16,7 @@ public class EducationalEngBook extends EngBook {
 
     @Override
     public String getString() {
-        if(isBachelor) return String.join(" ",discipline,author,university,"бакалавриат", year + "г" );
-        return String.join(" ",discipline,author,university,"магистратура", year + "г" );
+        if (isBachelor) return String.join(" ", discipline, author, university, "бакалавриат", year + "г");
+        return String.join(" ", discipline, author, university, "магистратура", year + "г");
     }
 }

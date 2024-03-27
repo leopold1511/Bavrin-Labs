@@ -1,6 +1,6 @@
 package Literature;
 
-public abstract class RuBook implements Book{
+public abstract class RuBook implements Book {
     protected String type;
     protected int edition;
 

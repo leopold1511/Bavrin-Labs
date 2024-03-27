@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Random;
 
 public class EducationalBookFactory implements AbstractBookFactory {
-    static List<String[]> disciplinesList = MyCsvReader.readCsv("data/disciplines.csv");
+    static List<String[]> disciplinesList = MyCsvReader.readCsv("Lab1/data/disciplines.csv");
 
     @Override
     public Book createRuBook() {
@@ -22,8 +22,8 @@ public class EducationalBookFactory implements AbstractBookFactory {
         return new EducationalRuBook(type, edition, disciplinesList.get(3)[r.nextInt(disciplinesList.get(3).length - 1)]);
     }
 
-    @Override
-    public Book createEngBook() {
+
+    public  Book createEngBook() {
         Random r = new Random();
         boolean isBachelor = r.nextBoolean();
         int year = r.nextInt(1950, 2024);

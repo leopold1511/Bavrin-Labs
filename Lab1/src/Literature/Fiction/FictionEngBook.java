@@ -14,7 +14,7 @@ public class FictionEngBook extends EngBook {
 
     @Override
     public String getString() {
-        return String.join(" ",title,author,year+"г",level);
+        return String.join(" ", title, author, year + "г", level);
     }
 
 }

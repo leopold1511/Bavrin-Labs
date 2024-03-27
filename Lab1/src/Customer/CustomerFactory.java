@@ -7,11 +7,11 @@ import java.util.Objects;
 import java.util.Random;
 
 public class CustomerFactory {
-    static List<String[]> listOfNames = MyCsvReader.readCsv("data/names.csv");
-    static List<String[]> listOfSurnames = MyCsvReader.readCsv("data/surnames.csv");
-    static List<String[]> listOfProfessorSurnames = MyCsvReader.readCsv("data/professor_surnames.csv");
+    static List<String[]> listOfNames = MyCsvReader.readCsv("Lab1/data/names.csv");
+    static List<String[]> listOfSurnames = MyCsvReader.readCsv("Lab1/data/surnames.csv");
+    static List<String[]> listOfProfessorSurnames = MyCsvReader.readCsv("Lab1/data/professor_surnames.csv");
 
-    static Customer createCustomer(String type) {
+    public static Customer createCustomer(String type) {
         return switch (type) {
             case "Professor" -> createProfessor(listOfNames, listOfProfessorSurnames);
             case "Student" -> createStudent(listOfNames, listOfSurnames);

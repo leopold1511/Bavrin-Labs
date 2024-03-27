@@ -11,8 +11,8 @@ import java.util.Random;
 import static java.lang.Integer.parseInt;
 
 public class FictionBookFactory implements AbstractBookFactory {
-    static List<String[]> englishFictionList = MyCsvReader.readCsv("data/english_fiction.csv");
-    static List<String[]> russianFictionList = MyCsvReader.readCsv("data/russian_fiction.csv");
+    static private final List<String[]> englishFictionList = MyCsvReader.readCsv("Lab1/data/english_fiction.csv");
+    static private final List<String[]> russianFictionList = MyCsvReader.readCsv("Lab1/data/russian_fiction.csv");
 
     @Override
     public Book createRuBook() {

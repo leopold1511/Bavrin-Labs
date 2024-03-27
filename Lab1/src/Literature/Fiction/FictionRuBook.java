@@ -14,7 +14,7 @@ public class FictionRuBook extends RuBook {
 
     @Override
     public String getString() {
-        return String.join(" ",type,"'",title,"'", author, edition+"-е","издание");
+        return String.join(" ", type, "'", title, "'", author, edition + "-е", "издание");
     }
 
 }
