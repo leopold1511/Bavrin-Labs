@@ -1,18 +1,31 @@
 package LiteratureFactory;
 
-import Literature.Book;
 import Literature.Educational.EducationalEngBook;
 import Literature.Educational.EducationalRuBook;
+import Literature.EngBook;
+import Literature.RuBook;
 import SubPackage.MyCsvReader;
 
 import java.util.List;
 import java.util.Random;
 
 public class EducationalBookFactory implements AbstractBookFactory {
-    static List<String[]> disciplinesList = MyCsvReader.readCsv("Lab1/data/disciplines.csv");
+    List<String[]> disciplinesList;
+    private static EducationalBookFactory INSTANCE;
+
+    private EducationalBookFactory() {
+        disciplinesList = MyCsvReader.readCsv("Lab1/data/disciplines.csv");
+    }
+
+    public static EducationalBookFactory getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new EducationalBookFactory();
+        }
+        return INSTANCE;
+    }
 
     @Override
-    public Book createRuBook() {
+    public RuBook createRuBook() {
         String[] types = {
                 "Задачник", "Учебник", "Пособие"
         };
@@ -23,7 +36,7 @@ public class EducationalBookFactory implements AbstractBookFactory {
     }
 
 
-    public  Book createEngBook() {
+    public EngBook createEngBook() {
         Random r = new Random();
         boolean isBachelor = r.nextBoolean();
         int year = r.nextInt(1950, 2024);

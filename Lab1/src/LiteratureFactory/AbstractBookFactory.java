@@ -1,9 +1,10 @@
 package LiteratureFactory;
 
-import Literature.Book;
+import Literature.EngBook;
+import Literature.RuBook;
 
 interface AbstractBookFactory {
-    Book createRuBook();
+    RuBook createRuBook();
 
-    Book createEngBook();
+    EngBook createEngBook();
 }

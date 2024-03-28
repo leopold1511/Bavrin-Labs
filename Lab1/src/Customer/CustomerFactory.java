@@ -7,11 +7,26 @@ import java.util.Objects;
 import java.util.Random;
 
 public class CustomerFactory {
-    static List<String[]> listOfNames = MyCsvReader.readCsv("Lab1/data/names.csv");
-    static List<String[]> listOfSurnames = MyCsvReader.readCsv("Lab1/data/surnames.csv");
-    static List<String[]> listOfProfessorSurnames = MyCsvReader.readCsv("Lab1/data/professor_surnames.csv");
+    private static CustomerFactory INSTANCE;
+    private List<String[]> listOfNames;
+    private List<String[]> listOfSurnames;
+    private List<String[]> listOfProfessorSurnames;
 
-    public static Customer createCustomer(String type) {
+
+    private CustomerFactory() {
+        listOfProfessorSurnames = MyCsvReader.readCsv("Lab1/data/professor_surnames.csv");
+        listOfNames = MyCsvReader.readCsv("Lab1/data/names.csv");
+        listOfSurnames = MyCsvReader.readCsv("Lab1/data/surnames.csv");
+    }
+
+    public static CustomerFactory getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new CustomerFactory();
+        }
+        return INSTANCE;
+    }
+
+    public Customer createCustomer(String type) {
         return switch (type) {
             case "Professor" -> createProfessor(listOfNames, listOfProfessorSurnames);
             case "Student" -> createStudent(listOfNames, listOfSurnames);
@@ -19,7 +34,7 @@ public class CustomerFactory {
         };
     }
 
-    static private Customer createProfessor(List<String[]> listOfNames, List<String[]> listOfSurnames) {
+    private Customer createProfessor(List<String[]> listOfNames, List<String[]> listOfSurnames) {
         Random r = new Random();
         String[] name = listOfNames.get(r.nextInt(listOfNames.size() - 1));
         String surname = listOfSurnames.get(r.nextInt(listOfSurnames.size() - 1))[0];
@@ -35,11 +50,11 @@ public class CustomerFactory {
         return new Professor(name[0], patronymics, surname);
     }
 
-    static private boolean checkSurname(String surname) {
+    private boolean checkSurname(String surname) {
         return !surname.endsWith("о") && !surname.endsWith("ь");
     }
 
-    static private Customer createStudent(List<String[]> listOfNames, List<String[]> listOfSurnames) {
+    private Customer createStudent(List<String[]> listOfNames, List<String[]> listOfSurnames) {
         Random r = new Random();
         String[] name = listOfNames.get(r.nextInt(listOfNames.size() - 1));
         String surname = listOfSurnames.get(r.nextInt(listOfSurnames.size() - 1))[0];

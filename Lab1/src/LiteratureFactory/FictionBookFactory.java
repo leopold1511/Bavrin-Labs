@@ -1,8 +1,9 @@
 package LiteratureFactory;
 
-import Literature.Book;
+import Literature.EngBook;
 import Literature.Fiction.FictionEngBook;
 import Literature.Fiction.FictionRuBook;
+import Literature.RuBook;
 import SubPackage.MyCsvReader;
 
 import java.util.List;
@@ -11,11 +12,25 @@ import java.util.Random;
 import static java.lang.Integer.parseInt;
 
 public class FictionBookFactory implements AbstractBookFactory {
-    static private final List<String[]> englishFictionList = MyCsvReader.readCsv("Lab1/data/english_fiction.csv");
-    static private final List<String[]> russianFictionList = MyCsvReader.readCsv("Lab1/data/russian_fiction.csv");
+    private final List<String[]> englishFictionList;
+    private final List<String[]> russianFictionList;
+    private static FictionBookFactory INSTANCE;
+
+    private FictionBookFactory() {
+        russianFictionList = MyCsvReader.readCsv("Lab1/data/russian_fiction.csv");
+        englishFictionList = MyCsvReader.readCsv("Lab1/data/english_fiction.csv");
+    }
+
+    public static FictionBookFactory getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new FictionBookFactory();
+        }
+        return INSTANCE;
+    }
+
 
     @Override
-    public Book createRuBook() {
+    public RuBook createRuBook() {
         new FictionRuBook(null, 0, null, null);
         Random r = new Random();
         String[] bookInfo = russianFictionList.get(r.nextInt(russianFictionList.size() - 1));
@@ -23,7 +38,7 @@ public class FictionBookFactory implements AbstractBookFactory {
     }
 
     @Override
-    public Book createEngBook() {
+    public EngBook createEngBook() {
         new FictionEngBook(null, 0, null, null);
         Random r = new Random();
         String[] levels = {
