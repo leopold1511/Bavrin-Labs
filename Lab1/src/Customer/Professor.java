@@ -11,4 +11,9 @@ public class Professor extends Customer {
     public String getString() {
         return name + " " + patronymic + " " + surname;
     }
+
+    @Override
+    public boolean isProfessor() {
+        return true;
+    }
 }

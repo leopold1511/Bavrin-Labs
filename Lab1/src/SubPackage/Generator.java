@@ -52,8 +52,11 @@ public class Generator {
         Random r = new Random();
         for (int i = 0; i < numberOfCustomers; i++) {
             int numberOfBooks = r.nextInt(3, 11);
-            customerInfos[i] = new CustomerInfo("", new String[numberOfBooks]);
+            if (customers.get(i).isProfessor()) {
+                customerInfos[i] = new CustomerInfo("", new String[numberOfBooks], true);
+            } else customerInfos[i] = new CustomerInfo("", new String[numberOfBooks], false);
             customerInfos[i].customer = customers.get(i).getString();
+
             List<Integer> forCheckingRepeats = new ArrayList<>();
             for (int j = 0; j < numberOfBooks; j++) {
                 int size = books.size();

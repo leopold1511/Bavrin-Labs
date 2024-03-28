@@ -12,16 +12,22 @@ public class GUI extends JFrame {
 
     public GUI() {
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Root");
+        DefaultMutableTreeNode professorNode = new DefaultMutableTreeNode("Профессоры");
+        DefaultMutableTreeNode studentNode = new DefaultMutableTreeNode("Студенты");
 
         CustomerInfo[] info = Generator.makeCustomersInfo(20);
-        DefaultMutableTreeNode[] customerNode = new DefaultMutableTreeNode[info.length];
+        DefaultMutableTreeNode[] customerNodes = new DefaultMutableTreeNode[info.length];
         for (int i = 0; i < info.length; i++) {
-            customerNode[i] = new DefaultMutableTreeNode(info[i].customer);
+            customerNodes[i] = new DefaultMutableTreeNode(info[i].customer);
             for (int j = 0; j < info[i].books.length; j++) {
-                customerNode[i].add(new DefaultMutableTreeNode(info[i].books[j]));
+                customerNodes[i].add(new DefaultMutableTreeNode(info[i].books[j]));
             }
-            root.add(customerNode[i]);
+            if (info[i].isProfessor) {
+                professorNode.add(customerNodes[i]);
+            } else studentNode.add(customerNodes[i]);
         }
+        root.add(professorNode);
+        root.add(studentNode);
 
         JTree tree = new JTree(root);
         DefaultTreeCellRenderer renderer = new DefaultTreeCellRenderer();

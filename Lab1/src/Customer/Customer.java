@@ -12,4 +12,6 @@ public abstract class Customer {
     public String getString() {
         return name + " " + surname;
     }
+
+    public abstract boolean isProfessor();
 }
