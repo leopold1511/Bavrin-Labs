@@ -1,17 +1,23 @@
 package Customer;
 
 import Literature.EngBook;
+import Literature.RuBook;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Customer {
     protected String name;
     protected String surname;
-    public EngBook[] englishBooks;
-    public EngBook[] russianBooks;
+    public List<EngBook> englishBooks;
+    public List<RuBook> russianBooks;
 
 
     public Customer(String name, String surname) {
         this.name = name;
         this.surname = surname;
+        englishBooks=new ArrayList<>();
+        russianBooks=new ArrayList<>();
     }
 
     public String getString() {

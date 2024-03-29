@@ -10,73 +10,86 @@ import LiteratureFactory.FictionBookFactory;
 import java.util.*;
 
 public class Generator {
+    private static final Random random = new Random();
 
-    static Set<EngBook> makeSetOfEngBooks() {
+    private static Set<EngBook> makeSetOfEngBooks() {
         Set<EngBook> books = new HashSet<>();
-        Random r = new Random();
         for (int i = 0; i < 60; i++) {
-            if (r.nextBoolean()) {
-                books.add(EducationalBookFactory.getInstance().createEngBook());
-            } else books.add(FictionBookFactory.getInstance().createEngBook());
+            books.add(random.nextBoolean() ? EducationalBookFactory.getInstance().createEngBook() :
+                    FictionBookFactory.getInstance().createEngBook());
         }
         return books;
     }
 
-    static Set<RuBook> makeSetOfRuBooks() {
+    private static Set<RuBook> makeSetOfRuBooks() {
         Set<RuBook> books = new HashSet<>();
-        Random r = new Random();
         for (int i = 0; i < 60; i++) {
-            if (r.nextBoolean()) {
-                books.add(FictionBookFactory.getInstance().createRuBook());
-            } else books.add(EducationalBookFactory.getInstance().createRuBook());
+            books.add(random.nextBoolean() ? FictionBookFactory.getInstance().createRuBook() :
+                    EducationalBookFactory.getInstance().createRuBook());
         }
         return books;
     }
 
-
-    static List<Customer> makeListOfCustomers(int numberOfCustomers) {
+    private static List<Customer> makeListOfCustomers(int numberOfCustomers) {
         List<Customer> customers = new ArrayList<>();
-        Random r = new Random();
         for (int i = 0; i < numberOfCustomers; i++) {
-            if (r.nextBoolean()) {
-                customers.add(CustomerFactory.getInstance().createCustomer("Professor"));
-            } else customers.add(CustomerFactory.getInstance().createCustomer("Student"));
+            customers.add(random.nextBoolean() ? CustomerFactory.getInstance().createCustomer("Professor") :
+                    CustomerFactory.getInstance().createCustomer("Student"));
         }
         return customers;
     }
 
-    public static CustomerInfo[] makeCustomersInfo(int numberOfCustomers) {
+    public static Customer[] generateCustomers(int numberOfCustomers) {
+        List<Customer> listOfCustomers = makeListOfCustomers(numberOfCustomers);
         Set<EngBook> engBooks = makeSetOfEngBooks();
         Set<RuBook> ruBooks = makeSetOfRuBooks();
-        List<Customer> customers = makeListOfCustomers(numberOfCustomers);
-        CustomerInfo[] customerInfos = new CustomerInfo[numberOfCustomers];
-        Random r = new Random();
+        Customer[] customers = new Customer[numberOfCustomers];
+        List<Integer> forCustomerRepeats = new ArrayList<>();
         for (int i = 0; i < numberOfCustomers; i++) {
-            int numberOfBooks = r.nextInt(3, 11);
-            if (customers.get(i).isProfessor()) {
-                customerInfos[i] = new CustomerInfo("", new String[numberOfBooks], true);
-            } else customerInfos[i] = new CustomerInfo("", new String[numberOfBooks], false);
-            customerInfos[i].customer = customers.get(i).getString();
+            int customerId;
+            do {
+                customerId = random.nextInt(listOfCustomers.size());
+            } while (forCustomerRepeats.contains(customerId));
+            customers[i] = listOfCustomers.get(customerId);
+            forCustomerRepeats.add(customerId);
+        }
+        distributeBooks(customers, engBooks, ruBooks);
+        return customers;
+    }
 
-            List<Integer> forCheckingRepeats = new ArrayList<>();
+    private static void distributeBooks(Customer[] customers, Set<EngBook> engBooks, Set<RuBook> ruBooks) {
+        int engBookSize = engBooks.size();
+        int ruBookSize = ruBooks.size();
+
+        for (Customer customer : customers) {
+            Set<Integer> forCheckingEngRepeats = new HashSet<>();
+            Set<Integer> forCheckingRuRepeats = new HashSet<>();
+            int numberOfBooks = random.nextInt(3, 11);
+
             for (int j = 0; j < numberOfBooks; j++) {
-                int size = engBooks.size();
-                int item;
-                do {
-                    item = new Random().nextInt(size);
-                } while (forCheckingRepeats.contains(item));
-                forCheckingRepeats.add(item);
-                int k = 0;
-                for (EngBook obj : engBooks) {
-                    if (k == item) {
-                        customerInfos[i].books[j] = obj.getString();
-                        break;
-                    }
-                    k++;
+                if (random.nextBoolean()) {
+                    addRandomBook(customer.englishBooks, engBooks, forCheckingEngRepeats, engBookSize);
+                } else {
+                    addRandomBook(customer.russianBooks, ruBooks, forCheckingRuRepeats, ruBookSize);
                 }
-
             }
         }
-        return customerInfos;
+    }
+
+    private static <T> void addRandomBook(Collection<T> customerBooks, Collection<T> availableBooks, Set<Integer> forCheckingRepeats, int bookSize) {
+        int item;
+        do {
+            item = random.nextInt(bookSize);
+        } while (forCheckingRepeats.contains(item));
+
+        int k = 0;
+        for (T obj : availableBooks) {
+            if (k == item) {
+                customerBooks.add(obj);
+                break;
+            }
+            k++;
+        }
+        forCheckingRepeats.add(item);
     }
 }
