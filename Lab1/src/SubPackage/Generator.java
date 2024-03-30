@@ -41,55 +41,34 @@ public class Generator {
 
     public static Customer[] generateCustomers(int numberOfCustomers) {
         List<Customer> listOfCustomers = makeListOfCustomers(numberOfCustomers);
-        Set<EngBook> engBooks = makeSetOfEngBooks();
-        Set<RuBook> ruBooks = makeSetOfRuBooks();
         Customer[] customers = new Customer[numberOfCustomers];
-        List<Integer> forCustomerRepeats = new ArrayList<>();
         for (int i = 0; i < numberOfCustomers; i++) {
-            int customerId;
-            do {
-                customerId = random.nextInt(listOfCustomers.size());
-            } while (forCustomerRepeats.contains(customerId));
-            customers[i] = listOfCustomers.get(customerId);
-            forCustomerRepeats.add(customerId);
+            customers[i] = listOfCustomers.get(i);
         }
-        distributeBooks(customers, engBooks, ruBooks);
+        distributeBooks(customers);
         return customers;
     }
 
-    private static void distributeBooks(Customer[] customers, Set<EngBook> engBooks, Set<RuBook> ruBooks) {
-        int engBookSize = engBooks.size();
-        int ruBookSize = ruBooks.size();
-
+    private static void distributeBooks(Customer[] customers) {
+        List<EngBook> engBooks = new ArrayList<>(makeSetOfEngBooks());
+        List<RuBook> ruBooks = new ArrayList<>(makeSetOfRuBooks());
         for (Customer customer : customers) {
-            Set<Integer> forCheckingEngRepeats = new HashSet<>();
-            Set<Integer> forCheckingRuRepeats = new HashSet<>();
             int numberOfBooks = random.nextInt(3, 11);
-
+            int item;
             for (int j = 0; j < numberOfBooks; j++) {
                 if (random.nextBoolean()) {
-                    addRandomBook(customer.englishBooks, engBooks, forCheckingEngRepeats, engBookSize);
+                    do {
+                        item = random.nextInt(engBooks.size());
+                    } while (customer.isEngBookInList(engBooks.get(item)));
+                    customer.englishBooks.add(engBooks.get(item));
                 } else {
-                    addRandomBook(customer.russianBooks, ruBooks, forCheckingRuRepeats, ruBookSize);
+                    do {
+                        item = random.nextInt(ruBooks.size());
+                    } while (customer.isRuBookInList(ruBooks.get(item)));
+                    customer.russianBooks.add(ruBooks.get(item));
                 }
             }
         }
     }
 
-    private static <T> void addRandomBook(Collection<T> customerBooks, Collection<T> availableBooks, Set<Integer> forCheckingRepeats, int bookSize) {
-        int item;
-        do {
-            item = random.nextInt(bookSize);
-        } while (forCheckingRepeats.contains(item));
-
-        int k = 0;
-        for (T obj : availableBooks) {
-            if (k == item) {
-                customerBooks.add(obj);
-                break;
-            }
-            k++;
-        }
-        forCheckingRepeats.add(item);
-    }
 }
