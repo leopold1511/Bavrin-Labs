@@ -29,19 +29,21 @@ public abstract class Customer {
     }
 
     public boolean isRuBookInList(RuBook newBook) {
-        for (int i = 0; i < russianBooks.size(); i++) {
-            if (newBook.equals(russianBooks.get(i))) return true;
+        for (RuBook russianBook : russianBooks) {
+            if (newBook.equals(russianBook)) return true;
         }
         return false;
     }
 
-    public void addBooksToNode(DefaultMutableTreeNode customerNode) {
+    public DefaultMutableTreeNode createNode() {
+        DefaultMutableTreeNode node = new DefaultMutableTreeNode(getString());
         for (EngBook englishBook : englishBooks) {
-            customerNode.add(new DefaultMutableTreeNode(englishBook.getString()));
+            node.add(new DefaultMutableTreeNode(englishBook.getString()));
         }
         for (RuBook russianBook : russianBooks) {
-            customerNode.add(new DefaultMutableTreeNode(russianBook.getString()));
+            node.add(new DefaultMutableTreeNode(russianBook.getString()));
         }
+        return node;
     }
 
 

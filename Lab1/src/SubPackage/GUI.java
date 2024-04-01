@@ -18,8 +18,7 @@ public class GUI extends JFrame {
         Customer[] customers = Generator.generateCustomers(20);
         DefaultMutableTreeNode[] customerNodes = new DefaultMutableTreeNode[customers.length];
         for (int i = 0; i < customers.length; i++) {
-            customerNodes[i] = new DefaultMutableTreeNode(customers[i].getString());
-            customers[i].addBooksToNode(customerNodes[i]);
+            customerNodes[i] = customers[i].createNode();
             if (customers[i].isProfessor()) {
                 professorNode.add(customerNodes[i]);
             } else studentNode.add(customerNodes[i]);
