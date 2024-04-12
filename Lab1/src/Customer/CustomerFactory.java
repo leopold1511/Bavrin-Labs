@@ -7,23 +7,15 @@ import java.util.Objects;
 import java.util.Random;
 
 public class CustomerFactory {
-    private static CustomerFactory INSTANCE;
-    private List<String[]> listOfNames;
-    private List<String[]> listOfSurnames;
-    private List<String[]> listOfProfessorSurnames;
+    final private List<String[]> listOfNames;
+    final private List<String[]> listOfSurnames;
+    final private List<String[]> listOfProfessorSurnames;
 
 
-    private CustomerFactory() {
+    public CustomerFactory() {
         listOfProfessorSurnames = MyCsvReader.readCsv("Lab1/data/professor_surnames.csv");
         listOfNames = MyCsvReader.readCsv("Lab1/data/names.csv");
         listOfSurnames = MyCsvReader.readCsv("Lab1/data/surnames.csv");
-    }
-
-    public static CustomerFactory getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new CustomerFactory();
-        }
-        return INSTANCE;
     }
 
     public Customer createCustomer(String type) {

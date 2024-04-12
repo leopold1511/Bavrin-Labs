@@ -9,7 +9,7 @@ public class Professor extends Customer {
     }
 
     public String getString() {
-        return name + " " + patronymic + " " + surname;
+        return String.join(" ", name, patronymic, surname);
     }
 
     @Override

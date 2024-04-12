@@ -7,6 +7,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
+import java.util.List;
 
 public class GUI extends JFrame {
 
@@ -15,13 +16,13 @@ public class GUI extends JFrame {
         DefaultMutableTreeNode professorNode = new DefaultMutableTreeNode("Профессоры");
         DefaultMutableTreeNode studentNode = new DefaultMutableTreeNode("Студенты");
 
-        Customer[] customers = Generator.generateCustomers(20);
-        DefaultMutableTreeNode[] customerNodes = new DefaultMutableTreeNode[customers.length];
-        for (int i = 0; i < customers.length; i++) {
-            customerNodes[i] = customers[i].createNode();
-            if (customers[i].isProfessor()) {
-                professorNode.add(customerNodes[i]);
-            } else studentNode.add(customerNodes[i]);
+        List<Customer> listOfCustomers = Generator.generateCustomers(20);
+        for (Customer customer : listOfCustomers) {
+            if (customer.isProfessor()) {
+                professorNode.add(customer.createNode());
+            } else {
+                studentNode.add(customer.createNode());
+            }
         }
         root.add(professorNode);
         root.add(studentNode);

@@ -9,4 +9,8 @@ public class Student extends Customer {
     public boolean isProfessor() {
         return false;
     }
+
+    public String getString() {
+        return String.join(" ", name, surname);
+    }
 }

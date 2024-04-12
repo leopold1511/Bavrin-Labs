@@ -21,7 +21,7 @@ public abstract class Customer {
         russianBooks = new ArrayList<>();
     }
 
-    public boolean isEngBookInList(EngBook newBook) {
+    public boolean isEngBookInList(Object newBook) {
         for (EngBook englishBook : englishBooks) {
             if (newBook.equals(englishBook)) return true;
         }
@@ -47,9 +47,7 @@ public abstract class Customer {
     }
 
 
-    public String getString() {
-        return name + " " + surname;
-    }
+    public abstract String getString();
 
     public abstract boolean isProfessor();
 }

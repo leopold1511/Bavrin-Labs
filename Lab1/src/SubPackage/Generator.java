@@ -30,29 +30,21 @@ public class Generator {
         return books;
     }
 
-    private static List<Customer> makeListOfCustomers(int numberOfCustomers) {
-        List<Customer> customers = new ArrayList<>();
+    public static List<Customer> generateCustomers(int numberOfCustomers) {
+        CustomerFactory customerFactory = new CustomerFactory();
+        List<Customer> listOfCustomers = new ArrayList<>();
         for (int i = 0; i < numberOfCustomers; i++) {
-            customers.add(random.nextBoolean() ? CustomerFactory.getInstance().createCustomer("Professor") :
-                    CustomerFactory.getInstance().createCustomer("Student"));
+            listOfCustomers.add(random.nextBoolean() ? customerFactory.createCustomer("Professor") :
+                    customerFactory.createCustomer("Student"));
         }
-        return customers;
+        giveOutBooks(listOfCustomers);
+        return listOfCustomers;
     }
 
-    public static Customer[] generateCustomers(int numberOfCustomers) {
-        List<Customer> listOfCustomers = makeListOfCustomers(numberOfCustomers);
-        Customer[] customers = new Customer[numberOfCustomers];
-        for (int i = 0; i < numberOfCustomers; i++) {
-            customers[i] = listOfCustomers.get(i);
-        }
-        distributeBooks(customers);
-        return customers;
-    }
-
-    private static void distributeBooks(Customer[] customers) {
+    private static void giveOutBooks(List<Customer> listOfCustomers) {
         List<EngBook> engBooks = new ArrayList<>(makeSetOfEngBooks());
         List<RuBook> ruBooks = new ArrayList<>(makeSetOfRuBooks());
-        for (Customer customer : customers) {
+        for (Customer customer : listOfCustomers) {
             int numberOfBooks = random.nextInt(3, 11);
             int item;
             for (int j = 0; j < numberOfBooks; j++) {
