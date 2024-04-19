@@ -21,20 +21,6 @@ public abstract class Customer {
         russianBooks = new ArrayList<>();
     }
 
-    public boolean isEngBookInList(Object newBook) {
-        for (EngBook englishBook : englishBooks) {
-            if (newBook.equals(englishBook)) return true;
-        }
-        return false;
-    }
-
-    public boolean isRuBookInList(RuBook newBook) {
-        for (RuBook russianBook : russianBooks) {
-            if (newBook.equals(russianBook)) return true;
-        }
-        return false;
-    }
-
     public DefaultMutableTreeNode createNode() {
         DefaultMutableTreeNode node = new DefaultMutableTreeNode(getString());
         for (EngBook englishBook : englishBooks) {
