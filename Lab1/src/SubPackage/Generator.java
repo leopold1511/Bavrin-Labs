@@ -43,7 +43,7 @@ public class Generator {
         List<RuBook> ruBooks = new ArrayList<>(makeSetOfRuBooks());
         for (Customer customer : listOfCustomers) {
             int numberOfBooks = random.nextInt(3, 11);
-            int numberOfRuBooks = random.nextInt(2, numberOfBooks);
+            int numberOfRuBooks = random.nextInt(numberOfBooks);
             distributeBooks(numberOfBooks - numberOfRuBooks, engBooks, customer.englishBooks);
             distributeBooks(numberOfRuBooks, ruBooks, customer.russianBooks);
         }
@@ -51,8 +51,12 @@ public class Generator {
 
     private static <T> void distributeBooks(int numberOfBooks, List<T> allBooks, List<T> customerBooks) {
         for (int i = 0; i < numberOfBooks; i++) {
+            List<Integer> repeats = new ArrayList<>();
             int item = random.nextInt(allBooks.size());
-            customerBooks.add(allBooks.get(item));
+            do {
+                customerBooks.add(allBooks.get(item));
+                repeats.add(item);
+            } while (!repeats.contains(item));
         }
     }
 }
