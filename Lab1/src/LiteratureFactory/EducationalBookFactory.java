@@ -11,17 +11,9 @@ import java.util.Random;
 
 public class EducationalBookFactory implements AbstractBookFactory {
     List<String[]> disciplinesList;
-    private static EducationalBookFactory INSTANCE;
 
-    private EducationalBookFactory() {
+    public EducationalBookFactory() {
         disciplinesList = MyCsvReader.readCsv("Lab1/data/disciplines.csv");
-    }
-
-    public static EducationalBookFactory getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new EducationalBookFactory();
-        }
-        return INSTANCE;
     }
 
     @Override

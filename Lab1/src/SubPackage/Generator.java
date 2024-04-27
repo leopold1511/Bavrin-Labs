@@ -11,11 +11,14 @@ import java.util.*;
 
 public class Generator {
     private static final Random random = new Random();
+    private static final EducationalBookFactory educationalBookFactory=new EducationalBookFactory();
+
+    private static final FictionBookFactory fictionBookFactory=new FictionBookFactory();
 
     private static Set<EngBook> makeSetOfEngBooks() {
         Set<EngBook> books = new HashSet<>();
         for (int i = 0; i < 60; i++) {
-            books.add(random.nextBoolean() ? EducationalBookFactory.getInstance().createEngBook() : FictionBookFactory.getInstance().createEngBook());
+            books.add(random.nextBoolean() ? educationalBookFactory.createEngBook() : fictionBookFactory.createEngBook());
         }
         return books;
     }
@@ -23,7 +26,7 @@ public class Generator {
     private static Set<RuBook> makeSetOfRuBooks() {
         Set<RuBook> books = new HashSet<>();
         for (int i = 0; i < 60; i++) {
-            books.add(random.nextBoolean() ? FictionBookFactory.getInstance().createRuBook() : EducationalBookFactory.getInstance().createRuBook());
+            books.add(random.nextBoolean() ? fictionBookFactory.createRuBook() : educationalBookFactory.createRuBook());
         }
         return books;
     }
@@ -51,12 +54,11 @@ public class Generator {
 
     private static <T> void distributeBooks(int numberOfBooks, List<T> allBooks, List<T> customerBooks) {
         for (int i = 0; i < numberOfBooks; i++) {
-            List<Integer> repeats = new ArrayList<>();
-            int item = random.nextInt(allBooks.size());
+            int item;
             do {
-                customerBooks.add(allBooks.get(item));
-                repeats.add(item);
-            } while (!repeats.contains(item));
+                item = random.nextInt(allBooks.size());
+            } while (!customerBooks.contains(allBooks.get(item)));
+            customerBooks.add((allBooks.get(item)));
         }
     }
 }

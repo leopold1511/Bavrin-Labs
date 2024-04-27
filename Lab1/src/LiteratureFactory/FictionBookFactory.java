@@ -14,18 +14,10 @@ import static java.lang.Integer.parseInt;
 public class FictionBookFactory implements AbstractBookFactory {
     private final List<String[]> englishFictionList;
     private final List<String[]> russianFictionList;
-    private static FictionBookFactory INSTANCE;
 
-    private FictionBookFactory() {
+    public FictionBookFactory() {
         russianFictionList = MyCsvReader.readCsv("Lab1/data/russian_fiction.csv");
         englishFictionList = MyCsvReader.readCsv("Lab1/data/english_fiction.csv");
-    }
-
-    public static FictionBookFactory getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new FictionBookFactory();
-        }
-        return INSTANCE;
     }
 
 
